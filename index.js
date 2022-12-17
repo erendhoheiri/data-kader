@@ -48,7 +48,7 @@ submit.addEventListener('click', async event => {
     pendidikan.value === '' ||
     position.value === '' ||
     pekerjaan.value === '' ||
-    foto.value === null
+    foto.value === ''
   ) {
     setTimeout(() => {
       loading.classList.add('d-none');
@@ -163,6 +163,8 @@ const generetPdf = async (name, pimkot) => {
 
     const jpgImageBytes = await fetch(jpgUrl).then(res => res.arrayBuffer());
     const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
+
+    console.log(jpgImage);
 
     firstP.drawImage(jpgImage, {
       x: 9.2,
