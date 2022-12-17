@@ -107,6 +107,11 @@ main {
   margin-bottom: 2rem;
 }
 
+@media screen and (max-width: 768px) {
+  .subtitle {
+    font-size: 1.3rem !important;
+  }
+}
 form {
   color: black;
 }
