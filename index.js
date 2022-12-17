@@ -1,36 +1,54 @@
 let name = document.getElementById('name');
 let pimkot = document.getElementById('pimkot');
-let arrival = document.getElementById('arrival');
+let alamat = document.getElementById('alamat');
 let phone = document.getElementById('phone');
-let keberangkatan = document.getElementById('keberangkatan');
-let kepulangan = document.getElementById('kepulangan');
+let pendidikan = document.getElementById('pendidikan');
 let position = document.getElementById('position');
-let recomendation = document.getElementById('recomendation');
+let pekerjaan = document.getElementById('pekerjaan');
+let minat = document.getElementById('minat');
+let foto = document.getElementById('foto');
 let alertSuccess = document.getElementById('alert-success');
 let alertError = document.getElementById('alert-error');
 let submit = document.getElementById('submit');
+let reset = document.getElementById('reset');
 let loading = document.getElementById('preloading');
-let foto = document.getElementById('foto');
 let textLoading = document.getElementById('text-loading');
+
+function resetForm() {
+  name.value = '';
+  pimkot.value = '';
+  alamat.value = '';
+  phone.value = '';
+  pendidikan.value = '';
+  position.value = '';
+  pekerjaan.value = '';
+  minat.value = '';
+  foto.value = null;
+}
+
+reset.addEventListener('click', () => {
+  resetForm();
+});
 
 submit.addEventListener('click', async event => {
   event.preventDefault();
   textLoading.textContent = '';
   const store = new SteinStore(
-    'https://api.steinhq.com/v1/storages/63970c13eced9b09e9a93974'
+    'https://api.steinhq.com/v1/storages/639d48c9eced9b09e9aa4d4c'
   );
   loading.classList.remove('d-none');
-  textLoading.textContent = 'Mengirim data ke Server...';
+  textLoading.textContent = 'Mengirim data...';
   document.body.style.overflow = 'hidden';
 
   if (
     name.value === '' ||
     pimkot.value === '' ||
-    arrival.value === '' ||
     phone.value === '' ||
-    keberangkatan.value === '' ||
-    kepulangan.value === '' ||
-    position.value === ''
+    alamat.value === '' ||
+    pendidikan.value === '' ||
+    position.value === '' ||
+    pekerjaan.value === '' ||
+    foto.value === null
   ) {
     setTimeout(() => {
       loading.classList.add('d-none');
@@ -45,13 +63,13 @@ submit.addEventListener('click', async event => {
       .append('Sheet1', [
         {
           nama: name.value,
-          nomer_hp: phone.value,
+          no_hp: phone.value,
           asal_pimkot: pimkot.value,
-          regional_keberangkatan: arrival.value,
-          tanggal_berangkat: keberangkatan.value,
-          tanggal_pulang: kepulangan.value,
-          posisi_saat_ini: position.value,
-          deskripsi_rekomendasi: recomendation.value
+          alamat: alamat.value,
+          pendidikan: pendidikan.value,
+          posisi: position.value,
+          pekerjaan: pekerjaan.value,
+          minat: minat.value
         }
       ])
       .then(res => {
@@ -60,7 +78,6 @@ submit.addEventListener('click', async event => {
           setTimeout(() => {
             alertSuccess.classList.add('d-none');
           }, 10000);
-          textLoading.textContent = '...';
         } else {
           alertError.classList.remove('d-none');
           setTimeout(() => {
@@ -77,15 +94,7 @@ submit.addEventListener('click', async event => {
     textLoading.textContent = 'Generate Kartu Anggota';
 
     await generetPdf(name.value, pimkot.value);
-    name.value = '';
-    pimkot.value = '';
-    arrival.value = '';
-    phone.value = '';
-    keberangkatan.value = '';
-    kepulangan.value = '';
-    position.value = '';
-    recomendation.value = '';
-    foto.value = null;
+    await resetForm();
     document.body.style.overflow = 'visible';
     loading.classList.add('d-none');
   }
@@ -113,40 +122,39 @@ encodeImageFileAsURL = element => {
 const generetPdf = async (name, pimkot) => {
   const { PDFDocument, StandardFonts, rgb } = PDFLib;
 
-  const exBytes = await fetch('./Cer.pdf').then(res => {
+  const exBytes = await fetch('./KTA.pdf').then(res => {
     return res.arrayBuffer();
   });
 
-  const exFont = await fetch('./Righteous-Regular.ttf').then(res => {
-    return res.arrayBuffer();
-  });
+  // const exFont = await fetch('./Righteous-Regular.ttf').then(res => {
+  //   return res.arrayBuffer();
+  // });
 
   const pdfDoc = await PDFDocument.load(exBytes);
 
   pdfDoc.registerFontkit(fontkit);
-  const myFont = await pdfDoc.embedFont(exFont);
-  //   const timesRomanFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
-
-  let nameWidth = await myFont.widthOfTextAtSize(name, 20);
-  let pimkotWidth = await myFont.widthOfTextAtSize(pimkot, 16);
+  // const myFont = await pdfDoc.embedFont(exFont);
+  const myFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
 
   const pages = pdfDoc.getPages();
   const firstP = pages[0];
   const { width, height } = firstP.getSize();
+
+  console.log(width, height);
   firstP.drawText(name, {
-    x: (width - nameWidth) / 2,
-    y: 94,
-    size: 20,
+    x: 80,
+    y: 92,
+    size: 9,
     font: myFont,
-    color: rgb(1, 1, 1)
+    color: rgb(0, 0, 0)
   });
 
   firstP.drawText(pimkot, {
-    x: (width - pimkotWidth) / 2,
-    y: 67,
-    size: 16,
+    x: 80,
+    y: 82,
+    size: 8,
     font: myFont,
-    color: rgb(1, 1, 1)
+    color: rgb(0.5, 0.15, 0.2)
   });
 
   async function image() {
@@ -157,10 +165,10 @@ const generetPdf = async (name, pimkot) => {
     const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
 
     firstP.drawImage(jpgImage, {
-      x: 66,
-      y: 134,
-      width: 137,
-      height: 164
+      x: 9.2,
+      y: 24.5,
+      width: 63,
+      height: 74.5
     });
   }
   await image();
@@ -168,5 +176,5 @@ const generetPdf = async (name, pimkot) => {
   data = [];
 
   const uri = await pdfDoc.saveAsBase64({ dataUri: true });
-  saveAs(uri, `KTA-Kongres-${name}.pdf`, { autoBom: true });
+  saveAs(uri, `KTA-FPPI-${name}.pdf`, { autoBom: true });
 };

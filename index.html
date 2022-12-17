@@ -12,14 +12,14 @@
       crossorigin="anonymous"
     />
 
-    <title>KONGRES FPPI - KTA GENERATOR</title>
+    <title>FRONT PERJUANGAN PEMUDA INDONESIA</title>
   </head>
   <body>
     <div class="wrapper">
       <div class="container">
         <header>
-          <img src="logo.jpeg" alt="logo" onclick="window.location.replace(`https://kongres-fppi.vercel.app/`)" />
-          <h2 class="title">Registrasi Anggota Kongres</h2>
+          <img src="logo.jpeg" alt="logo" onclick="window.location.replace(`/`)" />
+          <h2 class="title">Formulir Pendataan Kader</h2>
           <h3 class="subtitle">Front Perjuangan Pemuda Indonesia</h3>
         </header>
       </div>
@@ -43,7 +43,7 @@
             placeholder="Nama Lengkap"
             oninput="this.value = this.value.toUpperCase()"
             />
-            <label for="name" class="form-label">Nama Lengkap</label>
+            <label for="name" class="form-label">Nama Lengkap <span>(wajib diisi)</span></label>
           </div>
           <div class="form-floating mb-3">
             <input
@@ -52,7 +52,17 @@
             id="phone"
             placeholder="+62 81234567890"
             />
-            <label for="name" class="form-label">No. Whatsapp</label>
+            <label for="name" class="form-label">No. Hp / Whatsapp <span>(wajib diisi)</span></label>
+          </div>
+          <div class="form-floating mb-3">
+            <input
+            class="form-control"
+            type="text"
+            id="alamat"
+            placeholder="Alamat"
+            oninput="this.value = this.value.toUpperCase()"
+            />
+            <label for="name" class="form-label">Alamat Lengkap <span>(wajib diisi)</span></label>
           </div>
           <div class="form-floating mb-3">    
             <select id="pimkot" class="form-select" name="pimkot">
@@ -100,39 +110,28 @@
               <option value="PIMPINAN KOTA BIMA">PIMPINAN KOTA BIMA</option>
             </select>
             <label for="pimkot" class="form-label"
-              >Lokasi Pimpinan Kota
+              >Asal Pimpinan Kota <span>(wajib diisi)</span>
             </label>
           </div>
           <div class="form-floating mb-3">
-            <select id='arrival' name='arrival' class="form-select" defaultValue={''}>
+            <select class="form-select" id='pendidikan' name='pendidikan' defaultValue={''}>
               <option value='' disabled selected>
-                Pilih Lokasi Keberangkatan
+                Pilih Tingkat Pendidikan
               </option>
-              <option value='I (Banten, Jawa Barat, DKI Jakarta)'>
-                I (Banten, Jawa Barat, DKI Jakarta)
+              <option value='Pra NDK'>
+                Pra NDK
               </option>
-              <option value='II (D.I Yogyakarta, Jawa Tengah, Jawa Timur)'>
-                II (D.I Yogyakarta, Jawa Tengah, Jawa Timur)
+              <option value='NDK I'>
+                NDK I
               </option>
-              <option value='III (Sulsel, NTB, Ambon)'>
-                III (Sulsel, NTB, Ambon)
+              <option value='NDK II'>
+                NDK II
               </option>
-              <option value='IV (Sulbar, Kalimantan, NTT)'>
-                IV (Sulbar, Kalimantan, NTT)
+              <option value='Lainnya'>
+                Lainnya
               </option>
-              <option value='V (Lainnya)'>V (Lainnya)</option>
-          </select>
-          <label for="arrival" class="form-label"
-                >Regional Keberangkatan
-            </label>
-          </div>
-          <div class="form-floating mb-3">
-            <input class="form-control" type="date" id="keberangkatan" name="keberangkatan" />
-            <label for="keberangkatan" class="form-label">Rencana Tanggal Kedatangan</label>
-          </div>
-          <div class="form-floating mb-3">
-            <input class="form-control" type="date" id="kepulangan" name="kepulangan" />
-            <label for="kepulangan" class="form-label">Rencana Tanggal Kepulangan</label>
+            </select>
+            <label for='position' class="form-label">Pendidikan Terakhir di Organisasi <span>(wajib diisi)</span></label>
           </div>
           <div class="form-floating mb-3">
             <select class="form-select" id='position' name='position' defaultValue={''}>
@@ -150,14 +149,34 @@
               </option>
               <option value='Lainnya'>Lainnya</option>
             </select>
-            <label for='position' class="form-label">Posisi terkini di Organisasi</label>
+            <label for='position' class="form-label">Posisi terkini di Organisasi <span>(wajib diisi)</span></label>
           </div>
-          <div class=" mb-3">
-            <textarea class="form-control" id="recomendation" rows="5" placeholder="Deskripsikan Rekomendasi Anda yang akan didorong untuk FPPI di dalam Kongres VII (optional)"></textarea>
+          <div class="form-floating mb-3">
+            <input
+            class="form-control"
+            type="text"
+            id="pekerjaan"
+            placeholder="pekerjaan"
+            oninput="this.value = this.value.toUpperCase()"
+            />
+            <label for="name" class="form-label">Pekerjaan/Profesi <span>(wajib diisi)</span></label>
+          </div>
+          <div class="form-floating mb-3">
+            <input
+            class="form-control"
+            type="text"
+            id="minat"
+            placeholder="minat"
+            oninput="this.value = this.value.toUpperCase()"
+            />
+            <label for="name" class="form-label">Minat/Bakat/Orientasi (Khusus Kader Student)</label>
           </div>
           <div class="mb-3">
-            <label for="formFile" class="form-label" style="color:aliceblue">Upload Foto <span>(optional)</span></label>
+            <label for="formFile" class="form-label" style="color:aliceblue">Upload Foto <span>(wajib diisi)</span></label>
             <input class="form-control" type="file" id="foto" accept="image/jpg, image/jpeg" onchange={encodeImageFileAsURL(this)} >
+          </div>
+          <div class="mb-3" style="color: white; font-size:14px; text-align:justify; padding: 10px; background-color:rgba(207, 0, 15, 0.9); border-radius: 10px;">
+            *Semua data akan disimpan ke database kader, pastikan semua data yang dimasukkan benar. Apabila sudah selesai, Kartu Tanda Anggota Organisasi akan digenerate oleh sistem. Apabila ada kesalahan, silahkan hubungi admin.
           </div>
           <!-- Alert -->
           <div id="alert-success" class="alert alert-success m-3 d-none" role="alert">
@@ -165,12 +184,12 @@
           </div>
           <div id="alert-error" class="alert alert-danger m-3 d-none" role="alert">
             Data Anda Gagal Disimpan!
-            Isi semua kolom yang tersedia, kecuali deskripsi rekomendasi.
+            Isi semua kolom yang tersedia atau periksa koneksi Anda.
           </div>
         
           <div class="row align-items-start mt-4">
             <div class=" d-grid gap-2 col">
-              <div class="btn btn-dark" onclick="window.location.replace(`https://kongres-fppi.vercel.app/`)">Kembali</div>
+              <div class="btn btn-dark" id="reset">Reset</div>
             </div>
             <div class="d-grid gap-2 col mb-3">
               <button class="btn btn-danger" id="submit">Submit</button>

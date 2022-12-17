@@ -40,6 +40,7 @@ main {
 .wrapper {
   height: 100% !important;
   padding: 100px 0;
+
   background-image: radial-gradient(
       circle at 37% 80%,
       hsla(180, 0%, 7%, 0.1) 0%,
@@ -86,7 +87,7 @@ main {
       transparent 100%
     ),
     linear-gradient(45deg, rgba(150, 40, 27, 0.9), rgba(207, 0, 15, 0.9)),
-    url('/images/hero.jpg');
+    url('/hero.jpg');
   height: 100vh;
   background-position: center;
   background-size: cover;
